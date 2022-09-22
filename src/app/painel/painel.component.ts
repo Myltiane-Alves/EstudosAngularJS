@@ -7,6 +7,7 @@ import { FRASES } from './frases-mock';
   templateUrl: './painel.component.html',
   styleUrls: ['./painel.component.css']
 })
+
 export class PainelComponent implements OnInit {
 
   public frases: Frase[] = FRASES
@@ -15,8 +16,11 @@ export class PainelComponent implements OnInit {
   public rodadaFrase: Frase
   public resposta: string = ''
 
+  public progresso: number = 0
+
   constructor() {
-    this.rodadaFrase = this.frases[this.rodada]
+    this.atualizaRodada()
+
   }
 
   ngOnInit(): void {
@@ -31,11 +35,21 @@ export class PainelComponent implements OnInit {
     if (this.rodadaFrase.frasePtBr == this.resposta) {
       alert('A tradução está correta!')
       this.rodada++
-      this.rodadaFrase = this.frases[this.rodada]
+
+      this.progresso = this.progresso + (100 / this.frases.length)
+      //atualiza o objeto rodadaFrase
+      this.atualizaRodada()
+
     } else {
       alert('A tradução está errada!')
     }
+  }
 
+  public atualizaRodada(): void {
+    //define a frase da rodada com base em alguma lógica
+    this.rodadaFrase = this.frases[this.rodada]
 
+    //limpar a resposta
+    this.resposta = ''
   }
 }
