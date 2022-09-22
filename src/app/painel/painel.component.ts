@@ -11,12 +11,13 @@ import { FRASES } from './frases-mock';
 export class PainelComponent implements OnInit {
 
   public frases: Frase[] = FRASES
-  public instrcao: string = 'Traduza a frase:'
-  public rodada: number = 0
-  public rodadaFrase: Frase
+  public instrucao: string = 'Traduza a frase:'
   public resposta: string = ''
+  public rodada: number = 0
+  public rodadaFrase: Frase = new Frase('', '')
 
   public progresso: number = 0
+  public tentativas: number = 3
 
   constructor() {
     this.atualizaRodada()
@@ -32,16 +33,25 @@ export class PainelComponent implements OnInit {
   }
 
   public verificarResposta(): void {
+    console.log(this.tentativas)
+
     if (this.rodadaFrase.frasePtBr == this.resposta) {
       alert('A tradução está correta!')
       this.rodada++
 
-      this.progresso = this.progresso + (100 / this.frases.length)
       //atualiza o objeto rodadaFrase
       this.atualizaRodada()
 
+      this.progresso = this.progresso + (100 / this.frases.length)
+
     } else {
-      alert('A tradução está errada!')
+      this.tentativas--
+
+      if(this.tentativas === -1) {
+        alert('Você perdeu todas as tentativas')
+      }
+
+      console.log(this.tentativas)
     }
   }
 

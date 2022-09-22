@@ -1,4 +1,4 @@
 <!-- propertyBind -->
-<img [src]="coracaoVazio">
-<img [src]="coracaoCheio">
-<img [src]="coracaoCheio">
+
+<!-- diretiva ngFor -->
+<img *ngFor="let coracao of coracoes" [src]="coracao.exibeCoracao()">
